@@ -22,10 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
-        uses: csexton/debugger-action@master
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.HOST_USERNAME  }}
-          password: ${{ secrets.HOST_PASSWORD  }}
-          port: ${{ secrets.HOST_PORT }}
+          host: 192.168.2.140
+          username: root
+          password: 123456
+          port: 22
           script: whoami
