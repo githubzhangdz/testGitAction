@@ -42,16 +42,4 @@ jobs:
           username: root # 服务器登录用户名
           password: 123456 # 服务器登录密码
           port: 22 # 服务器ssh端口
-          script: |
-            # 停止旧版容器
-            docker stop $(docker ps --filter ancestor=registry.cn-hangzhou.aliyuncs.com/testdhczhang/testhelloworld -q)
-            # 删除旧版容器
-            docker rm -f $(docker ps -a --filter ancestor=registry.cn-hangzhou.aliyuncs.com/testdhczhang/testhelloworld:latest -q)
-            # 删除旧版镜像
-            docker rmi -f $(docker images registry.cn-hangzhou.aliyuncs.com/testdhczhang/testhelloworld:latest -q)
-            # 登录阿里云镜像服务器
-            docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
-            # 拉取最新latest版本镜像
-            docker pull registry.cn-hangzhou.aliyuncs.com/testdhczhang/testhelloworld:latest
-            # 运行最新latest版本镜像
-            docker run -d -p 8080:80 docker pull registry.cn-hangzhou.aliyuncs.com/testdhczhang/testhelloworld:latest
+          script: whoami
