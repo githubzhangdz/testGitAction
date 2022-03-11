@@ -26,4 +26,4 @@ jobs:
       - name: Login to Registry # 登录阿里云镜像服务器
         run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
       - name: Push Image # 推送镜像，设置版本为latest
-        run: docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
+        run: docker push ${{ secrets.DOCKER_REPOSITORY }}:1.0
