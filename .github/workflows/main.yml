@@ -16,30 +16,16 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build Image
-        # ${{ secrets.DOCKER_REPOSITORY }}是读取之前在Secret创建的名为DOCKER_REPOSITORY的值
-        run: docker build -t ${{ secrets.DOCKER_REPOSITORY }}:latest ./ # 打包并docker镜像，版本为latest
-      - name: Login to Registry # 登录阿里云镜像服务器
-        run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
-      - name: Push Image # 推送镜像，设置版本为latest
-        run: docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
+  
   pull-docker: # docker部署
-    needs: [build]
     name: Pull Docker
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: 192.168.2.140 # 服务器ip
-          username: root # 服务器登录用户名
-          password: 123456 # 服务器登录密码
-          port: 22 # 服务器ssh端口
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.HOST_USERNAME  }}
+          password: ${{ secrets.HOST_PASSWORD  }}
+          port: ${{ secrets.HOST_PORT }}
           script: whoami
