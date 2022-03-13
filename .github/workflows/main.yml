@@ -15,27 +15,9 @@ on: # workflow的事件钩子，告知程序说明时候出发自动部署
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  check: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
-    steps:
-    - uses: autotelic/action-wait-for-status-check@v1
-      id: wait-for-status
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        statusName: "An Expected Commit Status Context"
-    - name: Do something with a passing status
-      if: steps.wait-for-status.outputs.state == 'success'
-    - name: Do something with a failing status
-      if: steps.wait-for-status.outputs.state == 'failure'
-    - name: Echo Outputs
-      run: |
-       echo ${{ steps.wait-for-status.outputs.context }}
-       echo ${{ steps.wait-for-status.outputs.state }}
-       echo ${{ steps.wait-for-status.outputs.description }}
-       echo ${{ steps.wait-for-status.outputs.target_url }}
   # This workflow contains a single job called "build"
   build: # 打包并上传docker镜像
-    needs: [check]
+    #needs: [check]
     runs-on: ubuntu-latest # 依赖的环境      
     steps:
       - uses: actions/checkout@v2
