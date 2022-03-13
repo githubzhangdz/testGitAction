@@ -15,7 +15,7 @@ on: # workflow的事件钩子，告知程序说明时候出发自动部署
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test: # make sure the action works on a clean machine without building
+  check: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
     - uses: autotelic/action-wait-for-status-check@v1
@@ -35,6 +35,7 @@ jobs:
        echo ${{ steps.wait-for-status.outputs.target_url }}
   # This workflow contains a single job called "build"
   build: # 打包并上传docker镜像
+    needs: [check]
     runs-on: ubuntu-latest # 依赖的环境      
     steps:
       - uses: actions/checkout@v2
