@@ -26,7 +26,7 @@ jobs:
         echo "Current status is: $CURRENT_STATUS"
         if [ "${CURRENT_STATUS^^}" = "PENDING" ]; 
           then echo "Commit status PENDING!"; 
-          exit 1; 
+          exit 0; 
         fi
         if [ "${CURRENT_STATUS^^}" = "SUCCESS" ]; 
           then echo "Commit status SUCCESS!"; 
