@@ -12,8 +12,8 @@ on:                                      # workflow的事件钩子，告知程�
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  deploy:
-    name: deploy
+  Check:
+    name: check
     runs-on: ubuntu-latest
     steps:
     - name: Check commit status
@@ -35,7 +35,7 @@ jobs:
           exit 1; 
         fi
   build: # 打包并上传docker镜像
-    needs: [deploy]
+    needs: [Check]
     runs-on: ubuntu-latest # 依赖的环境      
     steps:
       - uses: actions/checkout@v2
@@ -46,3 +46,28 @@ jobs:
         run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
       - name: Push Image # 推送镜像，设置版本为latest
         run: docker push ${{ secrets.DOCKER_REPOSITORY }}:latest
+  pull-docker: # docker部署
+      needs: [build]
+      name: Pull Docker
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }} # 服务器ip
+            username: ${{ secrets.HOST_USERNAME }} # 服务器登录用户名
+            password: ${{ secrets.HOST_PASSWORD }} # 服务器登录密码
+            port: ${{ secrets.HOST_PORT }} # 服务器ssh端口
+            script: |
+              # 停止旧版容器
+              docker stop $(docker ps --filter ancestor=${{ secrets.DOCKER_REPOSITORY }} -q)
+              # 删除旧版容器
+              docker rm -f $(docker ps -a --filter ancestor=${{ secrets.DOCKER_REPOSITORY }}:latest -q)
+              # 删除旧版镜像
+              docker rmi -f $(docker images ${{ secrets.DOCKER_REPOSITORY }}:latest -q)
+              # 登录阿里云镜像服务器
+              docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
+              # 拉取最新latest版本镜像
+              docker pull ${{ secrets.DOCKER_REPOSITORY }}:latest
+              # 运行最新latest版本镜像
+              docker run -d -p 88:80 ${{ secrets.DOCKER_REPOSITORY }}:latest
