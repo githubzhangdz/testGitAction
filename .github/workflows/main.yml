@@ -6,9 +6,9 @@ name: Deploy to Amazon ECS（Setp check）  # workflow名称，可以随意改
 on:                                      # workflow的事件钩子，告知程序说明时候出发自动部署
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ testaction01]                 # 在testaction01分支有push操作的时候自动部署
+    branches: [ master]                 # 在master分支有push操作的时候自动部署
   pull_request:
-    branches: [ testaction01 ]
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
