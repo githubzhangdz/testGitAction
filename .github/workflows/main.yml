@@ -52,12 +52,12 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Deploy
-          uses: GPTED/SSH-My-Action@0.1
+          uses: appleboy/ssh-action@master
           with:
-            HOST: ${{ secrets.HOST }}
-            USER: ${{ secrets.HOST_USERNAME }}
-            PRIVATE_KEY: ${{ secrets.HOST_SSHKEY }}
-            PORT: ${{ secrets.HOST_PORT }}
+            host: ${{ secrets.HOST }} # 服务器ip
+            username: ${{ secrets.HOST_USERNAME }} # 服务器登录用户名
+            password: ${{ secrets.HOST_PASSWORD }} # 服务器登录密码
+            port: ${{ secrets.HOST_PORT }} # 服务器ssh端口
             script: |
               whoami
               ls -la
