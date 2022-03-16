@@ -58,7 +58,9 @@ jobs:
             username: ${{ secrets.HOST_USERNAME }}
             key: ${{ secrets.HOST_SSHKEY }}
             port: ${{ secrets.HOST_PORT }}
-            script: whoami
+            script: |
+              whoami
+              ls /root/.ssh
               # 停止旧版容器
               # sudo docker stop ${{ secrets.DOCKER_REPOSITORY }}
               # 删除旧版容器
