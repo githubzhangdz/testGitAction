@@ -52,16 +52,15 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Deploy
-          uses: appleboy/ssh-action@master
+          uses: GPTED/SSH-My-Action@0.1
           with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.HOST_USERNAME }}
-            key: ${{ secrets.HOST_SSHKEY }}
-            password: ${{ secrets.HOST_PASSWORD }}
-            port: ${{ secrets.HOST_PORT }}
+            HOST: ${{ secrets.HOST }}
+            USER: ${{ secrets.HOST_USERNAME }}
+            PRIVATE_KEY: ${{ secrets.HOST_SSHKEY }}
+            PORT: ${{ secrets.HOST_PORT }}
             script: |
               whoami
-              ls /root/.ssh
+              ls -la
               # 停止旧版容器
               # sudo docker stop ${{ secrets.DOCKER_REPOSITORY }}
               # 删除旧版容器
