@@ -56,7 +56,7 @@ jobs:
           with:
             host: ${{ secrets.HOST }} # 服务器ip
             username: ${{ secrets.HOST_USERNAME }} # 服务器登录用户名
-            password: ${{ secrets.HOST_PASSWORD }} # 服务器登录密码
+            key: ${{ secrets.HOST_SSHKEY }} # 服务器登录Key
             port: ${{ secrets.HOST_PORT }} # 服务器ssh端口
             script: |
               whoami
