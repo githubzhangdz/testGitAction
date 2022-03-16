@@ -56,7 +56,7 @@ jobs:
           with:
             host: ${{ secrets.HOST }}
             username: ${{ secrets.HOST_USERNAME }}
-            password: ${{ secrets.HOST_PASSWORD }}
+            key: ${{ secrets.HOST_SSHKEY }}
             port: ${{ secrets.HOST_PORT }}
             script: whoami
               # 停止旧版容器
