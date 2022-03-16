@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy to Amazon ECS（CI）  # workflow名称，可以随意改
+name: Deploy to Amazon ECS（CICD）  # workflow名称，可以随意改
 
 # Controls when the workflow will run
 on:                                      # workflow的事件钩子，告知程序说明时候出发自动部署
@@ -55,11 +55,10 @@ jobs:
           uses: appleboy/ssh-action@master
           with:
             host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            password: ${{ secrets.PASSWORD }}
-            port: ${{ secrets.PORT }}
-            script: |
-              whoami
+            username: ${{ secrets.HOST_USERNAME }}
+            password: ${{ secrets.HOST_PASSWORD }}
+            port: ${{ secrets.HOST_PORT }}
+            script: whoami
               # 停止旧版容器
               # sudo docker stop ${{ secrets.DOCKER_REPOSITORY }}
               # 删除旧版容器
