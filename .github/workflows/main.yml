@@ -54,12 +54,12 @@ jobs:
         - name: Deploy
           uses: appleboy/ssh-action@master
           with:
-            host: ${{ secrets.HOST }} # 服务器ip
-            username: ${{ secrets.HOST_USERNAME }} # 服务器登录用户名
-            password: ${{ secrets.HOST_PASSWORD }} # 服务器登录密码
-            port: ${{ secrets.HOST_PORT }} # 服务器ssh端口
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            password: ${{ secrets.PASSWORD }}
+            port: ${{ secrets.PORT }}
             script: |
-              echo "login success"
+              whoami
               # 停止旧版容器
               # sudo docker stop ${{ secrets.DOCKER_REPOSITORY }}
               # 删除旧版容器
