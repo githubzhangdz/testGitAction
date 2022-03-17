@@ -18,9 +18,6 @@ MAINTAINER Karthik Gaekwad
 # Update the repository
 RUN apt-get update
 
-# Install apt-utils 
-RUN apt-get install --assume-yes apt-utils
-
 # Install necessary tools
 RUN apt-get install -y vim wget dialog net-tools
 
