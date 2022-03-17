@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy to Amazon ECS(CICD) # workflow名称，可以随意改
+name: Deploy to Amazon ECS(CI/CD) # workflow名称，可以随意改
 
 # Controls when the workflow will run
 on:                                # workflow的事件钩子，告知程序说明时候出发自动部署
@@ -30,7 +30,6 @@ jobs:
     # Checkout repository for workflow access
     - name: checkout
       uses: actions/checkout@v2
-
     #Configure AWS CLI Credentials Retrieve from GitHub secrets
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
